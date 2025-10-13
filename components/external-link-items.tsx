@@ -1,7 +1,6 @@
 'use client'
 
-import { LuGlobe } from 'react-icons/li'
-import { SiDiscord } from 'react-icons/si'
+import { SiDiscord, SiGoogleearth } from 'react-icons/si'
 import Link from 'next/link'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
@@ -10,7 +9,7 @@ const externalLinks = [
   {
     name: 'Website',
     href: 'https://getromy.app',
-    icon: <LuGlobe className="mr-2 h-4 w-4" />
+    icon: <SiGoogleearth className="mr-2 h-4 w-4" />
   },
   {
     name: 'Discord',
