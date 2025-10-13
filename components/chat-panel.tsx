@@ -1,25 +1,27 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Textarea from 'react-textarea-autosize'
+import { Playfair_Display } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 
 import { UseChatHelpers } from '@ai-sdk/react'
 import { ArrowUp, ChevronDown, MessageCirclePlus, Square } from 'lucide-react'
+import Textarea from 'react-textarea-autosize'
 import { toast } from 'sonner'
 
-import { UploadedFile } from '@/lib/types'
 import type { UIDataTypes, UIMessage, UITools } from '@/lib/types/ai'
 import { cn } from '@/lib/utils'
+import { UploadedFile } from '@/lib/types'
+
+import { ActionButtons } from '@/components/action-buttons'
+import { FileUploadButton } from '@/components/file-upload-button'
+import { ModelTypeSelector } from '@/components/model-type-selector'
+import { SearchModeSelector } from '@/components/search-mode-selector'
+import { Button } from '@/components/ui/button'
+import { IconLogo } from '@/components/ui/icons'
+import { UploadedFileList } from '@/components/uploaded-file-list'
 
 import { useArtifact } from './artifact/artifact-context'
-import { Button } from './ui/button'
-import { Playfair_Display } from 'next/font/google'
-import { ActionButtons } from './action-buttons'
-import { FileUploadButton } from './file-upload-button'
-import { ModelTypeSelector } from './model-type-selector'
-import { SearchModeSelector } from './search-mode-selector'
-import { UploadedFileList } from './uploaded-file-list'
 
 // Configure Playfair Display font
 const playfairDisplay = Playfair_Display({
