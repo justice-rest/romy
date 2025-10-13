@@ -3,7 +3,7 @@ import { LangfuseExporter } from 'langfuse-vercel'
 
 export function register() {
   registerOTel({
-    serviceName: 'morphic-ai-search',
+    serviceName: 'romy-ai-search',
     traceExporter: new LangfuseExporter()
   })
 }

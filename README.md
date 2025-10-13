@@ -1,18 +1,14 @@
 <div align="center">
 
-# Morphic
+# Romy
 
 An AI-powered search engine with a generative UI.
-
-[![DeepWiki](https://img.shields.io/badge/DeepWiki-miurla%2Fmorphic-blue.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAyCAYAAAAnWDnqAAAAAXNSR0IArs4c6QAAA05JREFUaEPtmUtyEzEQhtWTQyQLHNak2AB7ZnyXZMEjXMGeK/AIi+QuHrMnbChYY7MIh8g01fJoopFb0uhhEqqcbWTp06/uv1saEDv4O3n3dV60RfP947Mm9/SQc0ICFQgzfc4CYZoTPAswgSJCCUJUnAAoRHOAUOcATwbmVLWdGoH//PB8mnKqScAhsD0kYP3j/Yt5LPQe2KvcXmGvRHcDnpxfL2zOYJ1mFwrryWTz0advv1Ut4CJgf5uhDuDj5eUcAUoahrdY/56ebRWeraTjMt/00Sh3UDtjgHtQNHwcRGOC98BJEAEymycmYcWwOprTgcB6VZ5JK5TAJ+fXGLBm3FDAmn6oPPjR4rKCAoJCal2eAiQp2x0vxTPB3ALO2CRkwmDy5WohzBDwSEFKRwPbknEggCPB/imwrycgxX2NzoMCHhPkDwqYMr9tRcP5qNrMZHkVnOjRMWwLCcr8ohBVb1OMjxLwGCvjTikrsBOiA6fNyCrm8V1rP93iVPpwaE+gO0SsWmPiXB+jikdf6SizrT5qKasx5j8ABbHpFTx+vFXp9EnYQmLx02h1QTTrl6eDqxLnGjporxl3NL3agEvXdT0WmEost648sQOYAeJS9Q7bfUVoMGnjo4AZdUMQku50McDcMWcBPvr0SzbTAFDfvJqwLzgxwATnCgnp4wDl6Aa+Ax283gghmj+vj7feE2KBBRMW3FzOpLOADl0Isb5587h/U4gGvkt5v60Z1VLG8BhYjbzRwyQZemwAd6cCR5/XFWLYZRIMpX39AR0tjaGGiGzLVyhse5C9RKC6ai42ppWPKiBagOvaYk8lO7DajerabOZP46Lby5wKjw1HCRx7p9sVMOWGzb/vA1hwiWc6jm3MvQDTogQkiqIhJV0nBQBTU+3okKCFDy9WwferkHjtxib7t3xIUQtHxnIwtx4mpg26/HfwVNVDb4oI9RHmx5WGelRVlrtiw43zboCLaxv46AZeB3IlTkwouebTr1y2NjSpHz68WNFjHvupy3q8TFn3Hos2IAk4Ju5dCo8B3wP7VPr/FGaKiG+T+v+TQqIrOqMTL1VdWV1DdmcbO8KXBz6esmYWYKPwDL5b5FA1a0hwapHiom0r/cKaoqr+27/XcrS5UwSMbQAAAABJRU5ErkJggg==)](https://deepwiki.com/miurla/morphic) [![GitHub stars](https://img.shields.io/github/stars/miurla/morphic?style=flat&colorA=000000&colorB=000000)](https://github.com/miurla/morphic/stargazers) [![GitHub forks](https://img.shields.io/github/forks/miurla/morphic?style=flat&colorA=000000&colorB=000000)](https://github.com/miurla/morphic/network/members)
 
 <a href="https://vercel.com/oss">
   <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
 </a>
 
 <br />
-
-<a href="https://trendshift.io/repositories/9207" target="_blank"><img src="https://trendshift.io/api/badge/repositories/9207" alt="miurla%2Fmorphic | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 <img src="./public/screenshot-2025-05-04.png" />
 
@@ -30,12 +26,6 @@ An AI-powered search engine with a generative UI.
 - 👥 [Contributing](#-contributing)
 - 📄 [License](#-license)
 
-📝 Explore AI-generated documentation on [DeepWiki](https://deepwiki.com/miurla/morphic)
-
-## 🧪 Beta Testing
-
-We're excited to announce the v1.0.0 pre-release is now available for beta testing at [beta.morphic.sh](https://beta.morphic.sh)!
-
 ### About v1.0.0 Branch
 
 The `v1.0.0` branch is our pre-release branch featuring:
@@ -49,21 +39,6 @@ This branch will be merged into `main` once:
 - Beta testing phase is complete
 - Critical bugs are resolved
 - All planned features are stable
-
-### Which Branch Should I Use?
-
-- **For production use**: Use the `main` branch (stable)
-- **For testing and feedback**: Use the `v1.0.0` branch or visit [beta.morphic.sh](https://beta.morphic.sh)
-
-### Help Us Improve
-
-Found a bug or have suggestions? We'd love to hear from you:
-
-- 🐛 [Report issues on GitHub](https://github.com/miurla/morphic/issues)
-- 💬 Use the feedback button in the header at [beta.morphic.sh](https://beta.morphic.sh) for quick feedback
-- 🤝 Contribute to the beta testing effort
-
-Your feedback helps make Morphic better for everyone!
 
 ## 🛠 Features
 
@@ -153,13 +128,13 @@ Models are configured in `config/models/*.json` with profile-based settings. Whe
 Fork the repo to your Github account, then run the following command to clone the repo:
 
 ```bash
-git clone git@github.com:[YOUR_GITHUB_ACCOUNT]/morphic.git
+git clone git@github.com:[YOUR_GITHUB_ACCOUNT]/romy.git
 ```
 
 ### 2. Install dependencies
 
 ```bash
-cd morphic
+cd romy
 bun install
 ```
 
@@ -206,26 +181,3 @@ docker compose up -d
 ```
 
 Visit http://localhost:3000 in your browser.
-
-## 🌐 Deploy
-
-Host your own live version of Morphic with Vercel or Docker.
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmiurla%2Fmorphic&env=DATABASE_URL,OPENAI_API_KEY,TAVILY_API_KEY,BRAVE_SEARCH_API_KEY,NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY)
-
-## 👥 Contributing
-
-We welcome contributions to Morphic! Whether it's bug reports, feature requests, or pull requests, all contributions are appreciated.
-
-Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
-
-- How to submit issues
-- How to submit pull requests
-- Commit message conventions
-- Development setup
-
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

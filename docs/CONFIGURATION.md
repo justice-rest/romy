@@ -1,6 +1,6 @@
 # Configuration Guide
 
-This guide covers the optional features and their configuration in Morphic.
+This guide covers the optional features and their configuration in Rōmy.
 
 ## Table of Contents
 
@@ -161,7 +161,7 @@ Model configuration files use the following structure:
 }
 ```
 
-Define all six combinations to control which model runs for every search mode (`quick`, `adaptive`, `planning`) and preference (`speed`, `quality`). For example, you can pair `quick/speed` with `gemini-2.5-flash-lite` while keeping `adaptive/quality` on GPT-5. The default config ships with OpenAI models for every slot so Morphic works out-of-the-box.
+Define all six combinations to control which model runs for every search mode (`quick`, `adaptive`, `planning`) and preference (`speed`, `quality`). For example, you can pair `quick/speed` with `gemini-2.5-flash-lite` while keeping `adaptive/quality` on GPT-5. The default config ships with OpenAI models for every slot so Rōmy works out-of-the-box.
 
 ### Supported Providers
 

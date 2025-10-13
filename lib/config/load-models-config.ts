@@ -22,7 +22,7 @@ const VALID_SEARCH_MODES: SearchMode[] = ['quick', 'adaptive', 'planning']
 
 function resolveConfigPath(): string {
   const profile =
-    process.env.MORPHIC_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
+    process.env.ROMY_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
   const file = `${profile}.json`
   const configPath = path.resolve(process.cwd(), 'config', 'models', file)
   return configPath
@@ -70,7 +70,7 @@ function validateModelsConfigStructure(
 
 export async function loadModelsConfig(): Promise<ModelsConfig> {
   const profile =
-    process.env.MORPHIC_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
+    process.env.ROMY_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
 
   if (cachedConfig && cachedProfile === profile) {
     return cachedConfig
@@ -109,7 +109,7 @@ export async function loadModelsConfig(): Promise<ModelsConfig> {
 // Synchronous load (for code paths that need sync access)
 export function loadModelsConfigSync(): ModelsConfig {
   const profile =
-    process.env.MORPHIC_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
+    process.env.ROMY_CLOUD_DEPLOYMENT === 'true' ? 'cloud' : 'default'
   if (cachedConfig && cachedProfile === profile) {
     return cachedConfig
   }

@@ -13,7 +13,7 @@ async function checkQualityChatLimit(userId: string): Promise<{
   resetAt: number
 }> {
   // If not in cloud deployment mode, allow unlimited requests
-  if (process.env.MORPHIC_CLOUD_DEPLOYMENT !== 'true') {
+  if (process.env.ROMY_CLOUD_DEPLOYMENT !== 'true') {
     return { allowed: true, remaining: Infinity, resetAt: 0 }
   }
 

@@ -136,7 +136,6 @@ export function ChatArtifactContainer({
         )}
       </div>
 
-      {/* Desktop: Independent panels like morphic-studio */}
       <div
         ref={containerRef}
         className="hidden md:flex flex-1 min-w-0 overflow-hidden"

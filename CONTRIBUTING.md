@@ -1,18 +1,12 @@
-# Contributing to Morphic
+# Contributing to Romy
 
-Thank you for your interest in contributing to Morphic! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to Romy! This document provides guidelines and instructions for contributing.
 
 ## Code of Conduct
 
 By participating in this project, you are expected to uphold our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## How to Contribute
-
-### Reporting Issues
-
-- Check if the issue already exists in our [GitHub Issues](https://github.com/miurla/morphic/issues)
-- Use the issue templates when creating a new issue
-- Provide as much context as possible
 
 ### Pull Requests
 
