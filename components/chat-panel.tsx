@@ -20,6 +20,7 @@ import { SearchModeSelector } from '@/components/search-mode-selector'
 import { Button } from '@/components/ui/button'
 import { IconLogo } from '@/components/ui/icons'
 import { UploadedFileList } from '@/components/uploaded-file-list'
+import { Greeting } from '@/components/chat-introduction'
 
 import { useArtifact } from './artifact/artifact-context'
 
@@ -150,13 +151,7 @@ export function ChatPanel({
         messages.length > 0 ? 'sticky bottom-0 px-2 pb-4' : 'px-6'
       )}
     >
-      {messages.length === 0 && (
-        <div className="mb-10 flex flex-col items-center gap-4">
-          <h1 className={cn(playfairDisplay.className, "text-5xl text-muted-foreground")}>
-            Rōmy
-          </h1>
-        </div>
-      )}
+      {messages.length === 0 && <Greeting />}
       {uploadedFiles.length > 0 && (
         <UploadedFileList files={uploadedFiles} onRemove={handleFileRemove} />
       )}
