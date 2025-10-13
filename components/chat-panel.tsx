@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
 import { useRouter } from 'next/navigation'
+import { Playfair_Display } from 'next/font/google'
 
 import { UseChatHelpers } from '@ai-sdk/react'
 import { ArrowUp, ChevronDown, MessageCirclePlus, Square } from 'lucide-react'
@@ -20,6 +21,13 @@ import { FileUploadButton } from './file-upload-button'
 import { ModelTypeSelector } from './model-type-selector'
 import { SearchModeSelector } from './search-mode-selector'
 import { UploadedFileList } from './uploaded-file-list'
+
+// Configure Playfair Display font
+const playfairDisplay = Playfair_Display({
+  weight: '500',
+  style: 'italic',
+  subsets: ['latin'],
+})
 
 // Constants for timing delays
 const INPUT_UPDATE_DELAY_MS = 10 // Delay to ensure input value is updated before form submission
@@ -143,7 +151,9 @@ export function ChatPanel({
     >
       {messages.length === 0 && (
         <div className="mb-10 flex flex-col items-center gap-4">
-          <IconLogo className="size-12 text-muted-foreground" />
+          <h1 className={cn(playfairDisplay.className, "text-5xl text-muted-foreground")}>
+            Rōmy
+          </h1>
         </div>
       )}
       {uploadedFiles.length > 0 && (
