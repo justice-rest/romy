@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Playfair_Display } from 'next/font/google'
 import { useRouter } from 'next/navigation'
 
 import { UseChatHelpers } from '@ai-sdk/react'
@@ -13,7 +12,6 @@ import type { UIDataTypes, UIMessage, UITools } from '@/lib/types/ai'
 import { cn } from '@/lib/utils'
 import { UploadedFile } from '@/lib/types'
 
-import { ActionButtons } from '@/components/action-buttons'
 import { FileUploadButton } from '@/components/file-upload-button'
 import { ModelTypeSelector } from '@/components/model-type-selector'
 import { SearchModeSelector } from '@/components/search-mode-selector'
@@ -23,13 +21,6 @@ import { UploadedFileList } from '@/components/uploaded-file-list'
 import { Greeting } from '@/components/chat-introduction'
 
 import { useArtifact } from './artifact/artifact-context'
-
-// Configure Playfair Display font
-const playfairDisplay = Playfair_Display({
-  weight: '500',
-  style: 'italic',
-  subsets: ['latin'],
-})
 
 // Constants for timing delays
 const INPUT_UPDATE_DELAY_MS = 10 // Delay to ensure input value is updated before form submission
@@ -303,33 +294,7 @@ export function ChatPanel({
         </div>
 
         {/* Action buttons for prompt suggestions */}
-        {messages.length === 0 && (
-          <ActionButtons
-            onSelectPrompt={message => {
-              // Set the input value and submit
-              handleInputChange({
-                target: { value: message }
-              } as React.ChangeEvent<HTMLTextAreaElement>)
-              // Submit the form after a small delay to ensure the input is updated
-              setTimeout(() => {
-                inputRef.current?.form?.requestSubmit()
-                // Reset focus state after action button submission
-                setIsInputFocused(false)
-                inputRef.current?.blur()
-              }, INPUT_UPDATE_DELAY_MS)
-            }}
-            onCategoryClick={category => {
-              // Set the category in the input
-              handleInputChange({
-                target: { value: category }
-              } as React.ChangeEvent<HTMLTextAreaElement>)
-              // Focus the input
-              inputRef.current?.focus()
-            }}
-            inputRef={inputRef}
-            className="mt-2"
-          />
-        )}
+        {messages.length === 0}
       </form>
     </div>
   )
