@@ -11,7 +11,17 @@ export const useCurrentUserImage = () => {
         console.error(error)
       }
 
-      setImage(data.session?.user.user_metadata.avatar_url ?? null)
+      const user = data.session?.user
+      const avatarUrl = user?.user_metadata.avatar_url
+
+      if (avatarUrl) {
+        setImage(avatarUrl)
+      } else if (user) {
+        const seed = user.user_metadata.full_name || user.email || 'default'
+        setImage(`https://api.dicebear.com/9.x/dylan/svg?seed=${encodeURIComponent(seed)}`)
+      } else {
+        setImage(null)
+      }
     }
     fetchUserImage()
   }, [])

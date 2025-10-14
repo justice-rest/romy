@@ -33,7 +33,11 @@ export default function UserMenu({ user }: UserMenuProps) {
   const userName =
     user.user_metadata?.full_name || user.user_metadata?.name || 'User'
   const avatarUrl =
-    user.user_metadata?.avatar_url || user.user_metadata?.picture
+    user.user_metadata?.avatar_url ||
+    user.user_metadata?.picture ||
+    `https://api.dicebear.com/9.x/dylan/svg?seed=${encodeURIComponent(
+      user.user_metadata?.full_name || user.email || 'default'
+    )}`
 
   const getInitials = (name: string, email: string | undefined) => {
     if (name && name !== 'User') {
