@@ -427,3 +427,34 @@
     cursor: pointer;
   }
 }
+
+/* Background image for chat interface */
+.chat-gradient-bg {
+  background-image: 
+    linear-gradient(
+      to bottom,
+      oklch(0.99 0 0) 0%,
+      oklch(0.99 0 0 / 0.9) 20%,
+      oklch(0.99 0 0 / 0.3) 50%,
+      transparent 70%
+    ),
+    url('https://app.anymark.co/assets/mymind-3dmu0gu23uc-unsplash-BFs6Irqg.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+.dark .chat-gradient-bg {
+  background-image: 
+    linear-gradient(
+      to bottom,
+      oklch(0 0 0) 0%,
+      oklch(0 0 0 / 0.9) 20%,
+      oklch(0 0 0 / 0.3) 50%,
+      transparent 70%
+    ),
+    url('https://app.anymark.co/assets/mymind-3dmu0gu23uc-unsplash-BFs6Irqg.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
