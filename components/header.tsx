@@ -38,15 +38,14 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
         {/* This div can be used for a logo or title on the left if needed */}
         <div></div>
 
-        <div className="flex items-center gap-2">
+       <div className="flex items-center gap-2">
           {isRootPage && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setFeedbackOpen(true)}
-            >
-              Feedback
-            </Button>
+            <>
+              <a href="/">
+                <img src="/images/Logoo.png" alt="Rōmy" className="w-9 h-9" />
+              </a>
+              <p>/</p>
+            </>
           )}
           {user ? <UserMenu user={user} /> : <GuestMenu />}
         </div>
