@@ -9,7 +9,7 @@ export function AnimatedLogo({
 }: React.ComponentProps<'div'>) {
   return (
     <div className={cn('h-8 w-8', className)} {...props}>
-      <Image src="/images/Logoo.png" alt="Logo" width={32} height={32} className="w-full h-full" />
+      <img src="/images/Logoo.png" alt="Logo" width={32} height={32} className="w-full h-full" />
     </div>
   )
 }
