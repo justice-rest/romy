@@ -44,6 +44,14 @@ interface ChatPanelProps {
   setUploadedFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>
 }
 
+const ROTATING_PLACEHOLDERS = [
+  'Tell me everything you can about the person you\'d need to research on!',
+  'Does this person own any businesses?',
+  'What is the value of a person\'s home?',
+  'Can you tell me if this person made any political contributions in the last several elections?',
+  'Does this person own any boats or aircraft?'
+]
+
 export function ChatPanel({
   chatId,
   input,
@@ -66,6 +74,7 @@ export function ChatPanel({
   const [isComposing, setIsComposing] = useState(false) // Composition state
   const [enterDisabled, setEnterDisabled] = useState(false) // Disable Enter after composition ends
   const [isInputFocused, setIsInputFocused] = useState(false) // Track input focus
+  const [placeholderIndex, setPlaceholderIndex] = useState(0)
   const { close: closeArtifact } = useArtifact()
   const isLoading = status === 'submitted' || status === 'streaming'
 
@@ -187,7 +196,7 @@ export function ChatPanel({
             onCompositionEnd={handleCompositionEnd}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
-            placeholder="Ask anything..."
+            placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
             spellCheck={false}
             value={input}
             disabled={isLoading || isToolInvocationInProgress()}
