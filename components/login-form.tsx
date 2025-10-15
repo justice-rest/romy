@@ -83,7 +83,7 @@ export function LoginForm({
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
-            <Image src="/image/logoo.png" alt="Logo" width={48} height={48} />
+            <Image src="/images/Logoo.png" alt="Logo" width={48} height={48} />
             Welcome back
           </CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
