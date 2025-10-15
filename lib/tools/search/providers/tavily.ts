@@ -29,7 +29,7 @@ interface ExtendedSearchResults extends SearchResults {
 
 export class TavilySearchProvider extends BaseSearchProvider {
   private cache: Map<string, CacheEntry> = new Map()
-  private pendingRequests: Map<string, Promise<SearchResults>> = new Map()
+  private pendingRequests: Map<string, Promise<ExtendedSearchResults>> = new Map()
   private readonly CACHE_TTL = 5 * 60 * 1000 // 5 minutes
   private readonly MAX_CACHE_SIZE = 100
   private readonly REQUEST_TIMEOUT = 15000 // 15 seconds
@@ -95,7 +95,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
       excludeDomains?: string[]
       includeRawContent?: boolean
     } = {}
-  ): Promise<SearchResults> {
+  ): Promise<ExtendedSearchResults> {
     const { maxResults = 10, includeDomains = [], excludeDomains = [], includeRawContent = false } = options
 
     // Execute parallel searches with different depths and merge results
@@ -165,7 +165,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
       searchDepth?: 'basic' | 'advanced'
       expandQuery?: boolean
     } = {}
-  ): Promise<SearchResults> {
+  ): Promise<ExtendedSearchResults> {
     const { maxResults = 10, searchDepth = 'advanced', expandQuery = true } = options
 
     if (!expandQuery) {
@@ -191,7 +191,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
   /**
    * Execute the actual Tavily API search
    */
-  private async executeSearch(options: TavilySearchOptions): Promise<SearchResults> {
+  private async executeSearch(options: TavilySearchOptions): Promise<ExtendedSearchResults> {
     const {
       query,
       maxResults = 10,
@@ -257,39 +257,49 @@ export class TavilySearchProvider extends BaseSearchProvider {
   /**
    * Process and normalize Tavily API results
    */
-  private processResults(data: any): SearchResults {
+  private processResults(data: any): ExtendedSearchResults {
     const processedImages: SearchResultImage[] = (data.images || [])
-      .map(
-        (item: string | { url: string; description: string }) => {
-          if (typeof item === 'string') {
-            return { url: sanitizeUrl(item), description: '' }
-          }
-          return {
-            url: sanitizeUrl(item.url),
-            description: item.description || ''
-          }
+      .map((item: string | { url: string; description: string }) => {
+        if (typeof item === 'string') {
+          return { url: sanitizeUrl(item), description: '' }
         }
-      )
-      .filter((image: SearchResultImage) => image.url)
+        return {
+          url: sanitizeUrl(item.url),
+          description: item.description || ''
+        }
+      })
+      .filter((image: SearchResultImage) => {
+        if (typeof image === 'string') return Boolean(image)
+        return Boolean(image.url)
+      })
+
+    const processedResults: ExtendedSearchResultItem[] = (data.results || []).map((result: any) => ({
+      ...result,
+      url: sanitizeUrl(result.url),
+      score: result.score
+    }))
 
     return {
-      ...data,
+      query: data.query || '',
+      results: processedResults,
       images: processedImages,
-      results: (data.results || []).map((result: any) => ({
-        ...result,
-        url: sanitizeUrl(result.url)
-      }))
+      answer: data.answer
     }
   }
 
   /**
    * Merge multiple search results, removing duplicates and ranking by relevance
    */
-  private mergeResults(results: SearchResults[], maxResults?: number): SearchResults {
+  private mergeResults(results: ExtendedSearchResults[], maxResults?: number): ExtendedSearchResults {
     const limit = maxResults || 20
 
     if (results.length === 0) {
-      return { results: [], images: [] }
+      return { 
+        query: '', 
+        results: [], 
+        images: [],
+        answer: undefined
+      }
     }
 
     if (results.length === 1) {
@@ -298,13 +308,13 @@ export class TavilySearchProvider extends BaseSearchProvider {
 
     // Merge and deduplicate results
     const urlSet = new Set<string>()
-    const mergedResults = []
+    const mergedResults: ExtendedSearchResultItem[] = []
 
     for (const result of results) {
       for (const item of result.results || []) {
         if (!urlSet.has(item.url)) {
           urlSet.add(item.url)
-          mergedResults.push(item)
+          mergedResults.push(item as ExtendedSearchResultItem)
         }
       }
     }
