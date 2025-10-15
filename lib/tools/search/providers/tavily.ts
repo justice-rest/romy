@@ -1,4 +1,4 @@
-import { SearchResultImage, SearchResults } from '@/lib/types'
+import { SearchResultImage, SearchResults, SearchResultItem } from '@/lib/types'
 import { sanitizeUrl } from '@/lib/utils'
 import { BaseSearchProvider } from './base'
 
@@ -16,6 +16,15 @@ interface TavilySearchOptions {
 interface CacheEntry {
   data: SearchResults
   timestamp: number
+}
+
+// Extended types to match Tavily's response
+interface ExtendedSearchResultItem extends SearchResultItem {
+  score?: number
+}
+
+interface ExtendedSearchResults extends SearchResults {
+  answer?: string
 }
 
 export class TavilySearchProvider extends BaseSearchProvider {
@@ -109,7 +118,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
       })
     ])
 
-    return this.mergeResults(basicResults, advancedResults, maxResults)
+    return this.mergeResults([basicResults, advancedResults], maxResults)
   }
 
   /**
@@ -176,7 +185,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
     )
 
     const results = await Promise.all(searches)
-    return this.mergeResults(...results, maxResults)
+    return this.mergeResults(results, maxResults)
   }
 
   /**
@@ -276,10 +285,8 @@ export class TavilySearchProvider extends BaseSearchProvider {
   /**
    * Merge multiple search results, removing duplicates and ranking by relevance
    */
-  private mergeResults(...results: SearchResults[]): SearchResults
-  private mergeResults(...args: any[]): SearchResults {
-    const maxResults = typeof args[args.length - 1] === 'number' ? args.pop() : 20
-    const results = args as SearchResults[]
+  private mergeResults(results: SearchResults[], maxResults?: number): SearchResults {
+    const limit = maxResults || 20
 
     if (results.length === 0) {
       return { results: [], images: [] }
@@ -304,6 +311,9 @@ export class TavilySearchProvider extends BaseSearchProvider {
 
     // Sort by score if available
     mergedResults.sort((a, b) => (b.score || 0) - (a.score || 0))
+    
+    // Limit results
+    const limitedResults = mergedResults.slice(0, limit)
 
     // Merge images
     const imageUrlSet = new Set<string>()
@@ -321,7 +331,7 @@ export class TavilySearchProvider extends BaseSearchProvider {
 
     return {
       query: results[0].query,
-      results: mergedResults.slice(0, maxResults),
+      results: limitedResults,
       images: mergedImages.slice(0, 10),
       answer: results[0].answer || results[1]?.answer
     }
