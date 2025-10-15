@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -14,7 +15,6 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { IconLogo } from '@/components/ui/icons'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput } from '@/components/ui/password-input'
@@ -71,7 +71,7 @@ export function SignUpForm({
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
-            <IconLogo className="size-12" />
+            <Image src="/image/logoo.png" alt="Logo" width={48} height={48} />
             Create an account
           </CardTitle>
           <CardDescription>
