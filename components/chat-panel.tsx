@@ -151,7 +151,7 @@ export function ChatPanel({
         messages.length > 0 ? 'sticky bottom-0 px-2 pb-4' : 'px-6'
       )}
     >
-      {messages.length === 0 && (<div className="chat-gradient-bg fixed bottom-0 left-0 right-0 h-[335px] pointer-events-none -z-10" />)}
+      {messages.length === 0 && (<div className="chat-gradient-bg fixed bottom-0 left-0 right-0 h-[320px] pointer-events-none -z-10" />)}
       {messages.length === 0 && <Greeting />}
       {uploadedFiles.length > 0 && (
         <UploadedFileList files={uploadedFiles} onRemove={handleFileRemove} />
