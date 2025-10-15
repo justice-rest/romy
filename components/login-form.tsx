@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/index'
@@ -83,7 +82,7 @@ export function LoginForm({
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
-            <img src="/images/Logoo.png" alt="Logo" width={48} height={48} />
+            <img src="/images/logoo.png" alt="Logo" width={48} height={48} />
             Welcome back
           </CardTitle>
           <CardDescription>Sign in to your account</CardDescription>

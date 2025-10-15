@@ -19,7 +19,7 @@ function IconLogo({ className, ...props }: React.ComponentProps<'svg'>) {
   )
 }
 
-function IconLogoOutline({ className, ...props }: React.ComponentProps<'svg'>) {
+function Iconlogooutline({ className, ...props }: React.ComponentProps<'svg'>) {
   return (
     <svg
       fill="currentColor"
@@ -43,4 +43,4 @@ function IconLogoOutline({ className, ...props }: React.ComponentProps<'svg'>) {
   )
 }
 
-export { IconLogo, IconLogoOutline }
+export { IconLogo, Iconlogooutline }

@@ -2,7 +2,7 @@ import { ListTodo, Search } from 'lucide-react'
 
 import { SearchMode } from '@/lib/types/search'
 
-import { IconLogoOutline } from '@/components/ui/icons'
+import { Iconlogooutline } from '@/components/ui/icons'
 
 export interface SearchModeConfig {
   value: SearchMode
@@ -25,7 +25,7 @@ export const SEARCH_MODE_CONFIGS: SearchModeConfig[] = [
     value: 'adaptive',
     label: 'Adaptive',
     description: 'Adaptive agentic search with intelligent query understanding',
-    icon: IconLogoOutline,
+    icon: Iconlogooutline,
     color: 'text-violet-500'
   },
   {

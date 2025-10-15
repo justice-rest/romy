@@ -21,9 +21,9 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Romy'
+const title = 'Rōmy'
 const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+  'Rōmy helps small nonprofits find new major donors at a fraction of the cost of existing solutions and is effective, affordable and fun to use!'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://intel.getromy.app'),

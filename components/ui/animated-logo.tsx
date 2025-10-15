@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 export function AnimatedLogo({
@@ -9,7 +8,7 @@ export function AnimatedLogo({
 }: React.ComponentProps<'div'>) {
   return (
     <div className={cn('h-8 w-8', className)} {...props}>
-      <img src="/images/Logoo.png" alt="Logo" width={32} height={32} className="w-full h-full" />
+      <img src="/images/logoo.png" alt="Logo" width={32} height={32} className="w-full h-full" />
     </div>
   )
 }
