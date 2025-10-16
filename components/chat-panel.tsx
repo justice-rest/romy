@@ -23,15 +23,13 @@ import { useArtifact } from './artifact/artifact-context'
 
 // Constants
 const INPUT_UPDATE_DELAY_MS = 10
-const PLACEHOLDER_ROTATION_INTERVAL_MS = 5000 // rotate every 5 seconds
 
 // Warm, sweet rotating placeholders ❤️
 const ROTATING_PLACEHOLDERS = [
-  'Can you tell me about [Name, Address, City, State, ZIP] and whether they might be a good donor for my organization?',
-  'Could you look up [Name, Address, City, State, ZIP] and see if they’d be a kind fit to support our cause?',
-  'I’m curious about [Name, Address, City, State, ZIP] — do you think they’d make a thoughtful donor for us?',
-  'Tell me about [Name, Address, City, State, ZIP] — and whether they’d be a good donor for my organization.',
-  'Would [Name, Address, City, State, ZIP] be someone who believes in what we do?'
+  `Could you look up [Name, Address, City, State, ZIP] and see if they'd be a kind fit to support our cause?`,
+  `I'm curious about [Name, Address, City, State, ZIP] — do you think they'd make a thoughtful donor for us?`,
+  `Tell me about [Name, Address, City, State, ZIP] — and whether they'd be a good donor for my organization.`,
+  `Would [Name, Address, City, State, ZIP] be someone who believes in what we do?`
 ]
 
 interface ChatPanelProps {
@@ -73,17 +71,9 @@ export function ChatPanel({
   const [isComposing, setIsComposing] = useState(false)
   const [enterDisabled, setEnterDisabled] = useState(false)
   const [isInputFocused, setIsInputFocused] = useState(false)
-  const [placeholderIndex, setPlaceholderIndex] = useState(0)
+  const [placeholderIndex] = useState(() => Math.floor(Math.random() * ROTATING_PLACEHOLDERS.length))
   const { close: closeArtifact } = useArtifact()
   const isLoading = status === 'submitted' || status === 'streaming'
-
-  // --- Rotate placeholders automatically ---
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex(prev => (prev + 1) % ROTATING_PLACEHOLDERS.length)
-    }, PLACEHOLDER_ROTATION_INTERVAL_MS)
-    return () => clearInterval(interval)
-  }, [])
 
   const handleCompositionStart = () => setIsComposing(true)
   const handleCompositionEnd = () => {
