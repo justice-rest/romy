@@ -43,6 +43,7 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
               <a href="/">
                 <img src="/images/logoo.png" alt="Rōmy" className="w-9 h-9" />
               </a>
+              <span className="font-semibold text-base">Rōmy</span>
               <p>/</p>
             </>
           )}
