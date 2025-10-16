@@ -41,9 +41,8 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
           {isRootPage && (
             <>
               <a href="/">
-                <img src="/images/logoo.png" alt="Rōmy" className="w-9 h-9" />
+                <img src="/images/h-logo.png" alt="Rōmy" className="w-9 h-9" />
               </a>
-              <span className="font-semibold text-base">Rōmy</span>
               <p>/</p>
             </>
           )}
