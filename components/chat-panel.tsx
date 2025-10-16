@@ -16,14 +16,23 @@ import { FileUploadButton } from '@/components/file-upload-button'
 import { ModelTypeSelector } from '@/components/model-type-selector'
 import { SearchModeSelector } from '@/components/search-mode-selector'
 import { Button } from '@/components/ui/button'
-import { IconLogo } from '@/components/ui/icons'
 import { UploadedFileList } from '@/components/uploaded-file-list'
 import { Greeting } from '@/components/chat-introduction'
 
 import { useArtifact } from './artifact/artifact-context'
 
-// Constants for timing delays
-const INPUT_UPDATE_DELAY_MS = 10 // Delay to ensure input value is updated before form submission
+// Constants
+const INPUT_UPDATE_DELAY_MS = 10
+const PLACEHOLDER_ROTATION_INTERVAL_MS = 5000 // rotate every 5 seconds
+
+// Warm, sweet rotating placeholders ❤️
+const ROTATING_PLACEHOLDERS = [
+  'Can you tell me about [Name, Address, City, State, ZIP] and whether they might be a good donor for my organization?',
+  'Could you look up [Name, Address, City, State, ZIP] and see if they’d be a kind fit to support our cause?',
+  'I’m curious about [Name, Address, City, State, ZIP] — do you think they’d make a thoughtful donor for us?',
+  'Tell me about [Name, Address, City, State, ZIP] — and whether they’d be a good donor for my organization.',
+  'Would [Name, Address, City, State, ZIP] be someone who believes in what we do?'
+]
 
 interface ChatPanelProps {
   chatId: string
@@ -36,21 +45,11 @@ interface ChatPanelProps {
   query?: string
   stop: () => void
   append: (message: any) => void
-  /** Whether to show the scroll to bottom button */
   showScrollToBottomButton: boolean
-  /** Reference to the scroll container */
   scrollContainerRef: React.RefObject<HTMLDivElement>
   uploadedFiles: UploadedFile[]
   setUploadedFiles: React.Dispatch<React.SetStateAction<UploadedFile[]>>
 }
-
-const ROTATING_PLACEHOLDERS = [
-  'Tell me everything you can about the person you\'d need to research on!',
-  'Does this person own any businesses?',
-  'What is the value of a person\'s home?',
-  'Can you tell me if this person made any political contributions in the last several elections?',
-  'Does this person own any boats or aircraft?'
-]
 
 export function ChatPanel({
   chatId,
@@ -71,27 +70,31 @@ export function ChatPanel({
   const router = useRouter()
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const isFirstRender = useRef(true)
-  const [isComposing, setIsComposing] = useState(false) // Composition state
-  const [enterDisabled, setEnterDisabled] = useState(false) // Disable Enter after composition ends
-  const [isInputFocused, setIsInputFocused] = useState(false) // Track input focus
+  const [isComposing, setIsComposing] = useState(false)
+  const [enterDisabled, setEnterDisabled] = useState(false)
+  const [isInputFocused, setIsInputFocused] = useState(false)
   const [placeholderIndex, setPlaceholderIndex] = useState(0)
   const { close: closeArtifact } = useArtifact()
   const isLoading = status === 'submitted' || status === 'streaming'
 
-  const handleCompositionStart = () => setIsComposing(true)
+  // --- Rotate placeholders automatically ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex(prev => (prev + 1) % ROTATING_PLACEHOLDERS.length)
+    }, PLACEHOLDER_ROTATION_INTERVAL_MS)
+    return () => clearInterval(interval)
+  }, [])
 
+  const handleCompositionStart = () => setIsComposing(true)
   const handleCompositionEnd = () => {
     setIsComposing(false)
     setEnterDisabled(true)
-    setTimeout(() => {
-      setEnterDisabled(false)
-    }, 300)
+    setTimeout(() => setEnterDisabled(false), 300)
   }
 
   const handleNewChat = () => {
     setMessages([])
     closeArtifact()
-    // Reset focus state when clearing chat
     setIsInputFocused(false)
     inputRef.current?.blur()
     router.push('/')
@@ -99,13 +102,10 @@ export function ChatPanel({
 
   const isToolInvocationInProgress = () => {
     if (!messages.length) return false
-
     const lastMessage = messages[messages.length - 1]
     if (lastMessage.role !== 'assistant' || !lastMessage.parts) return false
-
     const parts = lastMessage.parts
     const lastPart = parts[parts.length - 1]
-
     return (
       (lastPart?.type === 'tool-search' ||
         lastPart?.type === 'tool-fetch' ||
@@ -115,25 +115,18 @@ export function ChatPanel({
     )
   }
 
-  // if query is not empty, submit the query
   useEffect(() => {
     if (isFirstRender.current && query && query.trim().length > 0) {
-      append({
-        role: 'user',
-        content: query
-      })
+      append({ role: 'user', content: query })
       isFirstRender.current = false
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query])
+  }, [query, append])
 
   const handleFileRemove = useCallback(
-    (index: number) => {
-      setUploadedFiles(prev => prev.filter((_, i) => i !== index))
-    },
+    (index: number) => setUploadedFiles(prev => prev.filter((_, i) => i !== index)),
     [setUploadedFiles]
   )
-  // Scroll to the bottom of the container
+
   const handleScrollToBottom = () => {
     const scrollContainer = scrollContainerRef.current
     if (scrollContainer) {
@@ -151,21 +144,19 @@ export function ChatPanel({
         messages.length > 0 ? 'sticky bottom-0 px-2 pb-4' : 'px-6'
       )}
     >
-      {messages.length === 0}
       {messages.length === 0 && <Greeting />}
       {uploadedFiles.length > 0 && (
         <UploadedFileList files={uploadedFiles} onRemove={handleFileRemove} />
       )}
+
       <form
         onSubmit={e => {
           handleSubmit(e)
-          // Reset focus state after submission
           setIsInputFocused(false)
           inputRef.current?.blur()
         }}
-        className={cn('max-w-3xl w-full mx-auto relative')}
+        className="max-w-3xl w-full mx-auto relative"
       >
-        {/* Scroll to bottom button - only shown when showScrollToBottomButton is true */}
         {showScrollToBottomButton && messages.length > 0 && (
           <Button
             type="button"
@@ -182,8 +173,7 @@ export function ChatPanel({
         <div
           className={cn(
             'relative flex flex-col w-full gap-2 bg-muted rounded-3xl border border-input transition-shadow',
-            isInputFocused &&
-              'ring-1 ring-ring/20 ring-offset-1 ring-offset-background/50'
+            isInputFocused && 'ring-1 ring-ring/20 ring-offset-1 ring-offset-background/50'
           )}
         >
           <Textarea
@@ -216,14 +206,13 @@ export function ChatPanel({
                 e.preventDefault()
                 const textarea = e.target as HTMLTextAreaElement
                 textarea.form?.requestSubmit()
-                // Reset focus state after Enter key submission
                 setIsInputFocused(false)
                 textarea.blur()
               }
             }}
           />
 
-          {/* Bottom menu area */}
+          {/* Bottom menu */}
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center gap-2">
               <FileUploadButton
@@ -243,11 +232,7 @@ export function ChatPanel({
                           method: 'POST',
                           body: formData
                         })
-
-                        if (!res.ok) {
-                          throw new Error('Upload failed')
-                        }
-
+                        if (!res.ok) throw new Error('Upload failed')
                         const { file: uploaded } = await res.json()
                         setUploadedFiles(prev =>
                           prev.map(f =>
@@ -262,7 +247,7 @@ export function ChatPanel({
                               : f
                           )
                         )
-                      } catch (e) {
+                      } catch {
                         toast.error(`Failed to upload ${uf.file.name}`)
                         setUploadedFiles(prev =>
                           prev.map(f =>
@@ -276,6 +261,7 @@ export function ChatPanel({
               />
               <SearchModeSelector />
             </div>
+
             <div className="flex items-center gap-2">
               {messages.length > 0 && (
                 <Button
@@ -292,7 +278,7 @@ export function ChatPanel({
               <ModelTypeSelector />
               <Button
                 type={isLoading ? 'button' : 'submit'}
-                size={'icon'}
+                size="icon"
                 className={cn(isLoading && 'animate-pulse', 'rounded-full')}
                 disabled={input.length === 0 && !isLoading}
                 onClick={isLoading ? stop : undefined}
@@ -302,9 +288,6 @@ export function ChatPanel({
             </div>
           </div>
         </div>
-
-        {/* Action buttons for prompt suggestions */}
-        {messages.length === 0}
       </form>
     </div>
   )
