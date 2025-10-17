@@ -5,16 +5,7 @@ import { useMemo, useState, useEffect } from 'react'
 import { useCurrentUserName } from '@/hooks/use-current-user-name'
 
 const greetings = [
-  "How's your day going?",
-  'What are you working on today?',
-  "What's on your mind?",
-  'What brings you here today?',
-  "Got something cool you're building?",
-  "What's cooking?",
-  'What are we figuring out today?',
-  "What's the plan for today?",
-  'Whatcha up to?',
-  "What's the mission today?"
+  "Tell me below how I can help :D"
 ]
 
 export const Greeting = () => {
@@ -23,7 +14,7 @@ export const Greeting = () => {
   
   useEffect(() => {
     const hour = new Date().getHours()
-    setTimeBasedGreeting(hour < 12 ? "G'Day" : 'Hello')
+    setTimeBasedGreeting(hour < 12 ? "Good Morning!" : 'Hello')
   }, [])
   
   const randomGreeting = useMemo(

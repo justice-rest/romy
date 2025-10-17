@@ -26,10 +26,7 @@ const INPUT_UPDATE_DELAY_MS = 10
 
 // Warm, sweet rotating placeholders ❤️
 const ROTATING_PLACEHOLDERS = [
-  `Could you look up [Name, Address, City, State, ZIP] and see if they'd be a kind fit to support our cause?`,
-  `I'm curious about [Name, Address, City, State, ZIP] — do you think they'd make a thoughtful donor for us?`,
-  `Tell me about [Name, Address, City, State, ZIP] — and whether they'd be a good donor for my organization.`,
-  `Would [Name, Address, City, State, ZIP] be someone who believes in what we do?`
+  `Tell me about [fill in: Name, Address, City, St & Zip] and whether they’d be a good donor to my organization…`,
 ]
 
 interface ChatPanelProps {
